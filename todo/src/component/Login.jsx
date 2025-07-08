@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,7 @@ const Login = () => {
     password: "",
   });
   const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,6 +22,7 @@ const Login = () => {
       const res = await axios.post("http://localhost:3000/api/v1/auth/login", formData);
       localStorage.setItem("token", res.data.token);
       setMessage({ type: "success", text: "Login successful!" });
+      navigate('/todos');
      
     } catch (err) {
       setMessage({

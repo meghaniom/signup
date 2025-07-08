@@ -1,6 +1,7 @@
 
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ const Signup = () => {
     username: "",
   });
   const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,6 +23,7 @@ const Signup = () => {
       const res = await axios.post("http://localhost:3000/api/v1/auth/user", formData);
       setMessage({ type: "success", text: res.data.message });
       setFormData({ email: "", password: "", username: "" });
+        navigate('/login');
     } catch (err) {
       setMessage({ type: "error", text: err.response?.data?.message || "Something went wrong" });
     }
