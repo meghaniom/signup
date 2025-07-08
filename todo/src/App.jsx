@@ -1,22 +1,21 @@
 import "./App.css";
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route,  Router,  Routes } from "react-router-dom";
 import Signup from "./component/Signup";
 import Login from "./component/Login";
-import CreateTodo from "./page/CreateTodo";
+
+import Dashboard from "./page/Dashboard";
 import UpdateTodo from "./page/UpdateTodo";
-import ReadTodo from "./page/ReadTodo";
 
 function App() {
+  const isAuthenticated = !!localStorage.getItem("token");
   return (
     <>
       <BrowserRouter>
       <Routes>
-        <Route path="/" element ={<Signup/>} />
-        <Route path="/login" element = {<Login/>} />
-        <Route path="/todo" element= {<CreateTodo/>} />
-        <Route path="/todo/:id" element = {<UpdateTodo/>} />
-        <Route path="/todos" element = {<ReadTodo/>} />
-      
+        <Route path="/" element ={!isAuthenticated ? <Signup/> : <Navigate  to = "/login"/>}/>
+        <Route path="/login" element = {!isAuthenticated ? <Login/> : <Navigate to="/dashboard"/>} />
+        <Route path="/dashboard" element={isAuthenticated ? <Dashboard/> : <Navigate to="/"/>}/>
+      <Route path="/update/:id" element={isAuthenticated ? <UpdateTodo/>:<Navigate to="/dashboard"/> }/>
       </Routes>
       </BrowserRouter>
     </>
