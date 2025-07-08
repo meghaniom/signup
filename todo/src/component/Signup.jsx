@@ -18,7 +18,7 @@ const Signup = () => {
     e.preventDefault();
     setMessage(null);
     try {
-      const res = await axios.post("http://localhost:5000/api/register", formData);
+      const res = await axios.post("http://localhost:3000/api/v1/auth/user", formData);
       setMessage({ type: "success", text: res.data.message });
       setFormData({ email: "", password: "", username: "" });
     } catch (err) {
