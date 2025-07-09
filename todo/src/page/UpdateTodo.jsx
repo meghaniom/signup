@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateTodo = () => {
   const { id } = useParams();
@@ -11,28 +11,29 @@ const UpdateTodo = () => {
   useEffect(() => {
     const fetchTodo = async () => {
       try {
-        await axios.patch(
+       
+        const { data } = await axios.get(
           `http://localhost:3000/api/v1/todo/todo/${id}`,
-          { taskname },
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setTaskname(res.data.todo.taskname);
+        setTaskname(data.todo.taskname);
+        console.log("Fetched todo:", data.todo.taskname);
       } catch (error) {
-        console.log("update todo error");
+        console.error("Failed to fetch todo", error);
       }
     };
     fetchTodo();
   }, [id, token]);
 
   const handelupdate = async (e) => {
-    e.preventDafault();
+    e.preventDefault(); 
     try {
       await axios.patch(
-        `http://localhost:3000/api/v1/todo/todo/${id}`,
+        `http://localhost:3000/api/v1/todo/updatetodo/${id}`,
         { taskname },
         {
           headers: {
@@ -42,12 +43,16 @@ const UpdateTodo = () => {
       );
       navigate("/dashboard");
     } catch (error) {
-      console.log("update todo  failed");
+      console.error("Update todo failed", error);
     }
   };
+
   return (
-  <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handelupdate} className="bg-white p-6 rounded shadow-md w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <form
+        onSubmit={handelupdate}
+        className="bg-white p-6 rounded shadow-md w-full max-w-md"
+      >
         <h2 className="text-xl font-semibold mb-4 text-center">Update Todo</h2>
         <input
           value={taskname}
@@ -64,7 +69,7 @@ const UpdateTodo = () => {
         </button>
       </form>
     </div>
-  )
+  );
 };
 
 export default UpdateTodo;

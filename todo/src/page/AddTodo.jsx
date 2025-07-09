@@ -1,5 +1,5 @@
+import axios from "axios";
 import { useState } from "react";
-import api from "../utils/api";
 
 const AddTodo = ({ onAdd }) => {
   const [taskname, setTaskname] = useState("");
@@ -7,11 +7,21 @@ const AddTodo = ({ onAdd }) => {
   const addTodo = async (e) => {
     e.preventDefault();
     try {
-      await api.post("/todo", { taskname });
+      const res = await axios.post(
+        "http://localhost:3000/api/v1/todo/createtodo",
+        { taskname },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
       setTaskname("");
       onAdd(); 
     } catch (err) {
-      alert("Task exists or failed.");
+      
+      console.error(err);
     }
   };
 
@@ -24,7 +34,12 @@ const AddTodo = ({ onAdd }) => {
         placeholder="Enter a task"
         required
       />
-      <button type="submit" className="bg-green-500 text-white px-4 rounded hover:bg-green-600">Add</button>
+      <button
+        type="submit"
+        className="bg-green-500 text-white px-4 rounded hover:bg-green-600"
+      >
+        Add
+      </button>
     </form>
   );
 };
