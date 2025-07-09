@@ -93,6 +93,7 @@ const Signup = () => {
               <input
                 type="password"
                 name="password"
+                autocomplete="on"
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"

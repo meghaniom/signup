@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 
-const TodoList = () => {
+const TodoList = ({onLoaded }) => {
   const [todos, setTodos] = useState([]);
   const [deletingId, setDeletingId] = useState(null);
 
@@ -52,6 +52,7 @@ const TodoList = () => {
     if (deleteData.success) {
       // ✅ After deletion, refresh the todo list
       getTodos(); 
+     
     }
   } catch (err) {
     console.error("Delete failed", err);

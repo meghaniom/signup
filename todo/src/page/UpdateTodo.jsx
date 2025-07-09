@@ -7,11 +7,10 @@ const UpdateTodo = () => {
   const navigate = useNavigate();
   const [taskname, setTaskname] = useState("");
   const token = localStorage.getItem("token");
-
+  
   useEffect(() => {
     const fetchTodo = async () => {
       try {
-       
         const { data } = await axios.get(
           `http://localhost:3000/api/v1/todo/todo/${id}`,
           {
@@ -20,14 +19,19 @@ const UpdateTodo = () => {
             },
           }
         );
+       if(!data.todo) {
+        navigate("/dashboard");
+        return;
+       }
         setTaskname(data.todo.taskname);
         console.log("Fetched todo:", data.todo.taskname);
       } catch (error) {
         console.error("Failed to fetch todo", error);
+        navigate("/dashboard");
       }
     };
     fetchTodo();
-  }, [id, token]);
+  }, [id, token, navigate]);
 
   const handelupdate = async (e) => {
     e.preventDefault(); 
