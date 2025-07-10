@@ -61,7 +61,6 @@ function App() {
             </PublicRoute>
           }
         />
-
         <Route
           path="/dashboard"
           element={
@@ -78,7 +77,6 @@ function App() {
             </UserRoute>
           }
         />
-
         <Route
           path="/admindashboard"
           element={
@@ -95,7 +93,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

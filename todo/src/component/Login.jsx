@@ -9,15 +9,12 @@ const Login = () => {
   });
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage(null);
-
     try {
       const res = await axios.post(
         "http://localhost:3000/api/v1/auth/login",
@@ -67,7 +64,6 @@ const Login = () => {
           <h2 className="text-3xl font-bold text-center text-blue-700">
             Login to Your Account
           </h2>
-
           {message && (
             <div
               className={`p-3 rounded text-sm ${
@@ -79,7 +75,6 @@ const Login = () => {
               {message.text}
             </div>
           )}
-
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-gray-700">

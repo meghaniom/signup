@@ -79,7 +79,6 @@ const AdminTodoList = () => {
               <td className="px-4 py-2 border border-gray-300">
                 <div className="flex items-center gap-4">
                   <Link to={`/adminupdate/${todo._id}`}>
-                  Edit
                   </Link>
 
                   <button
