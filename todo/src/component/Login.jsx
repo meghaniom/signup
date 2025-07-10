@@ -23,8 +23,15 @@ const Login = () => {
         "http://localhost:3000/api/v1/auth/login",
         formData
       );
-      localStorage.setItem("token", res.data.token);
+      const {token, role} = res.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("role",role)
       setMessage({ type: "success", text: "Login successful!" });
+
+      if(role === "admin") {
+        navigate("/admindashboard");
+      }
+      else
       navigate("/dashboard");
     } catch (err) {
       setMessage({
@@ -33,7 +40,6 @@ const Login = () => {
       });
     }
   };
-
   return (
     <div className="min-h-screen flex">
       <div className="hidden md:flex w-1/2 bg-gradient-to-b from-blue-700 to-blue-900 text-white items-center justify-center p-10">
@@ -96,7 +102,7 @@ const Login = () => {
               <input
                 type="password"
                 name="password"
-                autocomplete="on"
+             
                 value={formData.password}
                 onChange={handleChange}
                 required

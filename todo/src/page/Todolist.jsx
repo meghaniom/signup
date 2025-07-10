@@ -50,7 +50,7 @@ const TodoList = ({onLoaded }) => {
     
 
     if (deleteData.success) {
-      // ✅ After deletion, refresh the todo list
+      
       getTodos(); 
      
     }

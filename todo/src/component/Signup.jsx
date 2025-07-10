@@ -7,6 +7,7 @@ const Signup = () => {
     email: "",
     password: "",
     username: "",
+    role : ""
   });
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Signup = () => {
     try {
       const res = await axios.post("http://localhost:3000/api/v1/auth/user", formData);
       setMessage({ type: "success", text: res.data.message });
-      setFormData({ email: "", password: "", username: "" });
+      setFormData({ email: "", password: "", username: "", role: "" });
       navigate("/login");
     } catch (err) {
       setMessage({
@@ -87,6 +88,17 @@ const Signup = () => {
                 placeholder="Enter your email"
                 required
               />
+            </div>
+            <div>
+              <label htmlFor="" className="block text-sm font-medium text-gray-700">Role</label>
+              <select 
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Password</label>
